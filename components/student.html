@@ -321,7 +321,7 @@
                 
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
-								li.setAttribute("id", questionIDArr[i]);
+								li.setAttribute("id", questionIDArr[i]); // Add question id to each question
                 var div2 = document.createElement("div");
                 div2.setAttribute("class", "count");
                 var p = document.createElement("p");
@@ -401,5 +401,18 @@
 
 					questionText.value = ""; // Reset the input area
 				}
+
+				// Code to update likes when a student presses a button
+				$("#post-container").on('click', 'a', function() {
+					var currentVal = $(this).parent().children().children().html();
+					var newVal = parseInt(currentVal) + 1;
+					$(this).parent().children().children().html(newVal);
+				});
+				// $("#post-container a").click(function() {
+				// 	console.log("Hello");
+				// 	//console.log($(this).html());
+				// 	//$(this).parent().$("count p").html() = $(this).parent().$("count p").html() + 1;
+				// 	//console.log($(this).parent().children().children().html());
+				// });
 
     </script>

@@ -2,6 +2,7 @@
 	<head>
 		<link rel="stylesheet" href="bootstrap.css">
 		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="font-awesome.min.css">
 	</head>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -10,8 +11,8 @@
 				  Message Board
 				</a>
 				<button type="button" class="btn btn-default navbar-btn nav-item">Sign in</button>
-				<a class="nav-item" href="">Home</a>
-				<a class="nav-item" href="">Questions</a>
+				<a class="nav-item" href="index.html">Home</a>
+				<a class="nav-item" href="questions.html">Questions</a>
 			</div>
 			<p class="navbar-text navbar-right" style="padding-right:20px">Signed in as Andrew</p>
 		</div>
@@ -20,10 +21,13 @@
 	<section id="student-sign-in">
 		<div class="col-md-3"></div>
 		<div class="container col-md-6">
-			<form>
+			<form class="login">
 				<div class="form-group">
 					<label for="user">Student ID</label>
-					<input type="user" class="form-control" placeholder="Student ID">
+					<input type="user" class="form-control student-id" placeholder="Student ID">
+					<br>
+					<label for="password">Password</label>
+					<input type="password" class="form-control" placeholder="Password">
 				</div>
 			<button type="submit" class="btn btn-success">Submit</button>
 			</form>
@@ -31,3 +35,16 @@
 		<div class="col-md-3"></div>
 	</section>
 </html>
+
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+
+<script>
+	$(".login").submit(function(event) {
+		var studentId = $(".student-id").val();
+		window.location.replace("questions.html");
+	});
+</script>

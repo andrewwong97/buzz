@@ -76,6 +76,8 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
     <script>
+				var displayName = "";
+
         // Initialize Firebase
         var config = {
           apiKey: "AIzaSyDIQcBZ4aBzumtBy2vOWIXE_coJmsYaYCg",
@@ -84,7 +86,7 @@
           storageBucket: "test-bd419.appspot.com",
           messagingSenderId: "302255903097"
         };
-        
+
         firebase.initializeApp(config);
 
         function googleLogin() {
@@ -196,7 +198,7 @@
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 // User is signed in.
-                var displayName = user.displayName;
+                displayName = user.displayName;
                 var email = user.email;
                 var emailVerified = user.emailVerified;
                 var photoURL = user.photoURL;
@@ -229,20 +231,20 @@
             initApp();
           };
 
-        
+
         var className = String(getParameterByName("accessCode"));
         console.log(className);
 
         const db = firebase.database().ref();
         const classes = db.child('Classes').child(className).child("Questions");
         classes.on('value', function(snapshot) {
-            
+
             var likesArr = [];
             var namesArr = [];
             var textsArr = [];
             var idsArr = [];
             var questionIDArr = [];
-            
+
             var questions = snapshot.val();
             for (var key in questions) {
                 // skip loop if the property is from prototype
@@ -318,7 +320,7 @@
                 div.removeChild(div.firstChild);
             }
             for (var i = namesArr.length -1; i >= 0; i--) {
-                
+
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
 								li.setAttribute("id", questionIDArr[i]); // Add question id to each question
@@ -360,7 +362,7 @@
                 cell4.innerHTML = likesArr[i];*/
             }
         });
-        
+
         function getParameterByName(name, url) {
             if (!url) {
               url = window.location.href;
@@ -386,8 +388,8 @@
 							count++;
 						}
 					});
-					console.log(count);
-					var name = "John Doe"; // Later to be replaced from Facebook Auth
+					//console.log(count);
+					var name = displayName; // Later to be replaced from Facebook Auth
 					var questionNumber = count + 1;
 					var questionTag = "Question" + questionNumber.toString();
 					var newQuestion = classes.child(questionTag);
@@ -401,18 +403,19 @@
 
 					questionText.value = ""; // Reset the input area
 				}
-
+                
 				// Code to update likes when a student presses a button
 				$("#post-container").on('click', 'a', function() {
 					var currentVal = $(this).parent().children().children().html();
 					var newVal = parseInt(currentVal) + 1;
 					$(this).parent().children().children().html(newVal);
+                    
+                    // Updating Firebase
+                    var qsID = $(this).parent().attr('id');
+                    var qsTag = "Question" + qsID.toString();
+                    
+                    classes.child(qsTag).child("Likes").set(newVal);
+
 				});
-				// $("#post-container a").click(function() {
-				// 	console.log("Hello");
-				// 	//console.log($(this).html());
-				// 	//$(this).parent().$("count p").html() = $(this).parent().$("count p").html() + 1;
-				// 	//console.log($(this).parent().children().children().html());
-				// });
 
     </script>

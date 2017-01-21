@@ -90,6 +90,7 @@
         var namesArr = [];
         var textsArr = [];
         var idsArr = [];
+				var questionIDArr = [];
 
         // Initialize Firebase
         var config = {
@@ -269,10 +270,13 @@
                         //text = obj[prop];
                         textsArr.push(obj[prop]);
                     }
-                    else if(prop == "StudentId") {
+                    else if(prop == "Name") {
                         //id = obj[prop];
-                        idsArr.push(obj[prop])
+                        idsArr.push(obj[prop]);
                     }
+										else if(prop == "qID") {
+											questionIDArr.push(obj[prop]);
+										}
                 }
                 /*var table = document.getElementById("test");
                 var row = table.insertRow(1);
@@ -317,6 +321,7 @@
                 var div = document.getElementById("post-container");
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
+								li.setAttribute("id", questionIDArr[i]);
                 var div2 = document.createElement("div");
                 div2.setAttribute("class", "count");
                 var p = document.createElement("p");
@@ -327,7 +332,7 @@
                 var p2 = document.createElement("p");
 
                 p2.appendChild(document.createTextNode(textsArr[i]));
-                a2.appendChild(document.createTextNode("Student " + idsArr[i]));
+                a2.appendChild(document.createTextNode(idsArr[i]));
                 p.appendChild(document.createTextNode(likesArr[i]));
                 div2.appendChild(p);
                 li.appendChild(div2);
@@ -363,17 +368,19 @@
 						}
 					});
 					console.log(count);
-					var name = "John"; // Later to be replaced from Facebook Auth
+					var name = "John Doe"; // Later to be replaced from Facebook Auth
 					var questionNumber = count + 1;
 					var questionTag = "Question" + questionNumber.toString();
 					var newQuestion = classes.child(questionTag);
 					newQuestion.set({
+						"qID": questionNumber,
 						"Likes": 1,
 						"Name": name,
-						"Text": questionText.value
+						"Text": questionText.value,
+						"AnswerText": ""
 					});
 
-					questionText.value = "";
+					questionText.value = ""; // Reset the input area
 				}
 
     </script>

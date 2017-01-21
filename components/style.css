@@ -1,0 +1,12 @@
+.nav-item {
+	margin-right: 5px;
+	text-decoration: none;
+}
+
+.post {
+	display: inline-block;
+	height: 40px;
+	width: 80%;
+	background-color: #FAFAFA;
+	text-overflow: hidden;
+}

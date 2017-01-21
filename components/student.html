@@ -5,18 +5,17 @@
 		<link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/bootstrap-social.css">
 	</head>
 	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="logo" href="#" style="text-decoration: none !important;">
+				<a class="logo" href="index.html" style="text-decoration: none !important;">
         			<img alt="Brand" src="img/BuzzV2.png" width="20%">
 				</a>
 				<button id="SignIn" type="button" class="btn btn-default navbar-btn nav-item" data-toggle="modal" data-target="#loginModal">Sign in</button>
                 <button id="SignOut" type="button" class="btn btn-default navbar-btn nav-item">Sign out</button>
-				<a class="nav-item" href="index.html">Home</a>
-				<a class="nav-item" href="questions.html">Questions</a>
 			</div>
 			<p class="navbar-text navbar-right" style="padding-right:20px" id="signInName">Signed in as Andrew</p>
 		</div>
@@ -64,8 +63,8 @@
                     </div><!-- end modal-header -->
 
                     <div class="modal-body">
-                        <button class="btn btn-info btn-block" id="Google">Sign in with Google</button><br>
-                        <button class="btn btn-info btn-block" id="Facebook">Log in with Facebook</button>
+                        <button class="btn btn-block btn-social btn-google" id="Google"><span class="fa fa-google"></span> Sign in with Google</button><br>
+                        <button class="btn btn-block btn-social btn-facebook" id="Facebook"><span class="fa fa-facebook-square"></span> Log in with Facebook</button>
                     </div> <!-- end modal-body -->
 
                     <div class="modal-footer">

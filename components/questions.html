@@ -79,8 +79,6 @@
 
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!-- Toggle Bootstrap JS -->
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
@@ -100,6 +98,8 @@
           storageBucket: "test-bd419.appspot.com",
           messagingSenderId: "302255903097"
         };
+        
+        firebase.initializeApp(config);
         
         function googleLogin() {
             if (!firebase.auth().currentUser) {
@@ -243,9 +243,11 @@
             initApp();
           };
         
-        firebase.initializeApp(config);
+        var className = String(getParameterByName("accessCode"));
+        console.log(className);
+        
         const db = firebase.database().ref();
-        const classes = db.child('Classes').child("Class1").child("Questions");
+        const classes = db.child('Classes').child(className).child("Questions");
         classes.on('value', function(snapshot) {
             var questions = snapshot.val();
             for (var key in questions) {
@@ -349,4 +351,16 @@
                 cell4.innerHTML = likesArr[i];*/
             }
         });
+        
+        function getParameterByName(name, url) {
+            if (!url) {
+              url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
     </script>

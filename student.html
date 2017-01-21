@@ -62,7 +62,7 @@
     <div class="modal fade answer-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	  <div class="modal-dialog modal-lg">
 		<div class="modal-content">
-		  <span class="center-text"><h2>Professor's Answer</h2></span>
+		  <span class="center-text"><h2>Instructor's Answer</h2></span>
 		  <div class="answer-container">
 		  	  <div class="answer-box" style="margin-left:10px;margin-right:10px"><p id="answerTextField">Sample answer here.</p></div>
 		  </div>
@@ -346,6 +346,8 @@
                 var p = document.createElement("p");
                 var a = document.createElement("a");
                 a.setAttribute("class", "fa fa-arrow-up fa-lg upvote");
+				var check = document.createElement("a");
+				check.setAttribute("class", "fa fa-check fa-lg upvote");
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
@@ -372,7 +374,11 @@
                 p.appendChild(document.createTextNode(likesArr[i]));
                 div2.appendChild(p);
                 li.appendChild(div2);
-                li.appendChild(a);
+				if (answersArr[i] != "") {
+					li.appendChild(check);
+				} else {
+					li.appendChild(a);
+				}
                 li.appendChild(a2);
                 li.appendChild(p2);
                 if (answersArr[i] != "") {

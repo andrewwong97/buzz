@@ -5,80 +5,56 @@
 		<link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/bootstrap-social.css">
 	</head>
 	
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="logo" href="#" style="text-decoration: none !important;">
+				<a class="logo" href="index.html" style="text-decoration: none !important;">
         			<img alt="Brand" src="img/BuzzV2.png" width="20%">
 				</a>
 				<button id="SignIn" type="button" class="btn btn-default navbar-btn nav-item" data-toggle="modal" data-target="#loginModal">Sign in</button>
                 <button id="SignOut" type="button" class="btn btn-default navbar-btn nav-item">Sign out</button>
-				<a class="nav-item" href="index.html">Home</a>
-				<a class="nav-item" href="questions.html">Questions</a>
 			</div>
-			<p class="navbar-text navbar-right" style="padding-right:20px" id="signInName">Signed in as Andrew</p>
+			<p class="navbar-text navbar-right" style="padding-right:20px" id="signInName"></p>
 		</div>
 	</nav>
 
 	<section id="messages">
 		<div id="post-container" class="post-container">
 			<span class="center-text">
-				<h1>Questions</h1>
+				<h1>Professor Admin</h1>
 			</span>
-			<div class="add-parent">
-				<div class="add-child">
-					<input type="text" class="add-question" placeholder="Add Question">
-					<input type="submit" class="btn btn-add-question">
-				</div>
-			</div>
 			<li class="post">
 				<div class="count"><p>15</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
+				<a class="fa fa-arrow-up fa-lg upvote" id="qid-1234567890"></a> <!-- QUESTION ID -->
 				<a id="post-user">Andrew</a>
 				<p>What is the difference between heap and stack in C++?</p>
+				<button class="btn btn-default" style="margin-left:10px;" data-toggle="modal" data-target=".answer-modal">Add Answer</button>
 			</li>
-			<li class="post">
-				<div class="count"><p>10</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
-				<a id="post-user">Anonymous</a>
-				<p>Why should I use Node.js over everything else?</p>
-			</li>
-			<li class="post">
-				<div class="count"><p>8</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
-				<a id="post-user">Andrew</a>
-				<p>I accidentally typed in "rm -Rf" in Terminal. Where are all my files?</p>
-			</li>
+			<div class="modal fade answer-modal" tabindex="-1" role="dialog" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+				<div class="modal-content">
+				  <span class="center-text"><h2>Add Answer</h2></span>
+				  <div class="answer-container">
+					  <textarea class="answer-box" cols="50" rows="10" placeholder="Start typing your answer here..."></textarea>
+					  <input type="submit" class="btn btn-add-answer" style="margin-bottom:10px;">
+				  </div>
+				  
+				</div>
+			  </div>
+			</div>
+
 		</div>
 	</section>
-    <div class="container">
-        <div class="modal fade" id="loginModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="close" data-dismiss="modal">&times;</button>
-
-                        <h4 class="modal-title">Login</h4>
-                    </div><!-- end modal-header -->
-
-                    <div class="modal-body">
-                        <button class="btn btn-info btn-block" id="Google">Sign in with Google</button><br>
-                        <button class="btn btn-info btn-block" id="Facebook">Log in with Facebook</button>
-                    </div> <!-- end modal-body -->
-
-                    <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                    </div><!-- end modal-footer -->
-                </div><!-- end modal-content -->
-            </div><!-- end modal-dialog -->
-        </div><!-- end myModal -->
-    </div>
 </html>
 
-    <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <!-- Toggle Bootstrap JS -->
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
@@ -98,8 +74,6 @@
           storageBucket: "test-bd419.appspot.com",
           messagingSenderId: "302255903097"
         };
-        
-        firebase.initializeApp(config);
         
         function googleLogin() {
             if (!firebase.auth().currentUser) {
@@ -243,11 +217,9 @@
             initApp();
           };
         
-        var className = String(getParameterByName("accessCode"));
-        console.log(className);
-        
+        firebase.initializeApp(config);
         const db = firebase.database().ref();
-        const classes = db.child('Classes').child(className).child("Questions");
+        const classes = db.child('Classes').child("Class1").child("Questions");
         classes.on('value', function(snapshot) {
             var questions = snapshot.val();
             for (var key in questions) {
@@ -328,7 +300,13 @@
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
-                
+                var answer = document.createElement("button");
+				answer.setAttribute("class", "btn btn-default");
+				answer.setAttribute("style", "margin-left:10px;");
+				answer.setAttribute("data-toggle", "modal");
+				answer.setAttribute("data-target", ".answer-modal");
+				answer.innerHTML = "Add Answer";
+									
                 p2.appendChild(document.createTextNode(textsArr[i]));
                 a2.appendChild(document.createTextNode("Student " + idsArr[i]));
                 p.appendChild(document.createTextNode(likesArr[i]));
@@ -337,6 +315,7 @@
                 li.appendChild(a);
                 li.appendChild(a2);
                 li.appendChild(p2);
+				li.appendChild(answer);
                 div.appendChild(li);
                 
                 /*var table = document.getElementById("test");
@@ -351,16 +330,4 @@
                 cell4.innerHTML = likesArr[i];*/
             }
         });
-        
-        function getParameterByName(name, url) {
-            if (!url) {
-              url = window.location.href;
-            }
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
     </script>

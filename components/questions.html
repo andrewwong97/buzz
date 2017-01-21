@@ -19,7 +19,7 @@
 	</nav>
 
 	<section id="messages">
-		<div class="post-container">
+		<div id="post-container" class="post-container">
 			<span class="center-text">
 				<h1>Questions</h1>
 				<input type="text" class="add-question" placeholder="Add Question">
@@ -47,7 +47,129 @@
 	</section>
 </html>
 
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
+    <script>
+        var likesArr = [];
+        var namesArr = [];
+        var textsArr = [];
+        var idsArr = [];
+        
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyDIQcBZ4aBzumtBy2vOWIXE_coJmsYaYCg",
+          authDomain: "test-bd419.firebaseapp.com",
+          databaseURL: "https://test-bd419.firebaseio.com",
+          storageBucket: "test-bd419.appspot.com",
+          messagingSenderId: "302255903097"
+        };
+        firebase.initializeApp(config);
+        const db = firebase.database().ref();
+        const classes = db.child('Classes').child("Class1").child("Questions").orderByChild("Likes");
+        classes.on('value', function(snapshot) {
+            var questions = snapshot.val();
+            for (var key in questions) {
+                // skip loop if the property is from prototype
+                if (!questions.hasOwnProperty(key)) continue;
 
-<script>
-	
-</script>
+                var obj = questions[key];
+                namesArr.push(key);
+                /*var questionName = key;
+                var likes;
+                var id;
+                var text;*/
+                for (var prop in obj) {
+                    // skip loop if the property is from prototype
+                    if(!obj.hasOwnProperty(prop)) continue;
+
+                    if(prop == "Likes") {
+                        //likes = obj[prop];
+                        likesArr.push(obj[prop]);
+                    }
+                    else if(prop == "Text") {
+                        //text = obj[prop];
+                        textsArr.push(obj[prop]);
+                    }
+                    else if(prop == "StudentId") {
+                        //id = obj[prop];
+                        idsArr.push(obj[prop])
+                    }
+                }
+                /*var table = document.getElementById("test");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                cell1.innerHTML = questionName;
+                cell2.innerHTML = text;
+                cell3.innerHTML = id;
+                cell4.innerHTML = likes;*/
+            }
+            var next2last = likesArr.length - 1;
+            likesArr.some(function() {
+                var isNotSwapped = true;
+                for (var index = 0; index < next2last; index += 1) {
+                    var nextIndex = index + 1;
+                    if (likesArr[index] > likesArr[nextIndex]) {
+                        var holder = likesArr[nextIndex];
+                        var holder = likesArr[nextIndex];
+                        likesArr[nextIndex] = likesArr[index];
+                        likesArr[index] = holder;
+                        
+                        var holder2 = namesArr[nextIndex];
+                        namesArr[nextIndex] = namesArr[index];
+                        namesArr[index] = holder2;
+                        
+                        var holder3 = textsArr[nextIndex];
+                        textsArr[nextIndex] = textsArr[index];
+                        textsArr[index] = holder3;
+                        
+                        var holder4 = idsArr[nextIndex];
+                        idsArr[nextIndex] = idsArr[index];
+                        idsArr[index] = holder4;
+                        
+                        isNotSwapped = false;
+                    }
+                }
+            });
+            for(var i = 0; i < namesArr.length; i++) {
+                var div = document.getElementById("post-container");
+                var li = document.createElement("li");
+                li.setAttribute("class", "post");
+                var div2 = document.createElement("div");
+                div2.setAttribute("class", "count");
+                var p = document.createElement("p");
+                var a = document.createElement("a");
+                a.setAttribute("class", "fa");
+                a.setAttribute("class", "fa-arrow-up");
+                a.setAttribute("class", "fa-lg");
+                a.setAttribute("class", "upvote");
+                var a2 = document.createElement("a");
+                a2.setAttribute("id", "post-user");
+                var p2 = document.createElement("p");
+                
+                p2.appendChild(document.createTextNode(textsArr[i]));
+                a2.appendChild(document.createTextNode("Student " + idsArr[i]));
+                p.appendChild(document.createTextNode(likesArr[i]));
+                div2.appendChild(p);
+                li.appendChild(div2);
+                li.appendChild(a);
+                li.appendChild(a2);
+                li.appendChild(p2);
+                div.appendChild(li);
+                
+                /*var table = document.getElementById("test");
+                var row = table.insertRow(1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                cell1.innerHTML = namesArr[i];
+                cell2.innerHTML = textsArr[i];
+                cell3.innerHTML = idsArr[i];
+                cell4.innerHTML = likesArr[i];*/
+            }
+        });
+    </script>

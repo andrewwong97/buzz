@@ -18,6 +18,13 @@
 	width: 100%;
 }
 
+#preview {
+	position: absolute;
+	top: 450px;
+	width: 100%;
+	background-color: #FAFAFA;
+}
+
 .nav-item {
 	margin-right: 5px;
 	text-decoration: none;

@@ -32,24 +32,14 @@
 					<input type="submit" class="btn btn-add-question" onclick="submitQuestionToDB()">
 				</div>
 			</div>
+<!--
 			<li class="post">
 				<div class="count"><p>15</p></div>
 				<a class="fa fa-arrow-up fa-lg upvote"></a>
 				<a id="post-user">Andrew</a>
 				<p>What is the difference between heap and stack in C++?</p>
 			</li>
-			<li class="post">
-				<div class="count"><p>10</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
-				<a id="post-user">Anonymous</a>
-				<p>Why should I use Node.js over everything else?</p>
-			</li>
-			<li class="post">
-				<div class="count"><p>8</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
-				<a id="post-user">Andrew</a>
-				<p>I accidentally typed in "rm -Rf" in Terminal. Where are all my files?</p>
-			</li>
+-->
 		</div>
 	</section>
     <div class="container">
@@ -78,8 +68,6 @@
 
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!-- Toggle Bootstrap JS -->
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
@@ -100,6 +88,8 @@
           storageBucket: "test-bd419.appspot.com",
           messagingSenderId: "302255903097"
         };
+        
+        firebase.initializeApp(config);
 
         function googleLogin() {
             if (!firebase.auth().currentUser) {
@@ -243,9 +233,12 @@
             initApp();
           };
 
-        firebase.initializeApp(config);
+        
+        var className = String(getParameterByName("accessCode"));
+        console.log(className);
+
         const db = firebase.database().ref();
-        const classes = db.child('Classes').child("Class1").child("Questions");
+        const classes = db.child('Classes').child(className).child("Questions");
         classes.on('value', function(snapshot) {
             var questions = snapshot.val();
             for (var key in questions) {
@@ -330,6 +323,12 @@
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
+				var answer = document.createElement("button");
+				answer.setAttribute("class", "btn btn-default");
+				answer.setAttribute("style", "margin-left:10px;");
+				answer.setAttribute("data-toggle", "modal");
+				answer.setAttribute("data-target", ".answer-modal");
+				answer.innerHTML = "See Answer";
 
                 p2.appendChild(document.createTextNode(textsArr[i]));
                 a2.appendChild(document.createTextNode(idsArr[i]));
@@ -339,6 +338,7 @@
                 li.appendChild(a);
                 li.appendChild(a2);
                 li.appendChild(p2);
+				li.appendChild(answer);
                 div.appendChild(li);
 
                 /*var table = document.getElementById("test");
@@ -353,6 +353,18 @@
                 cell4.innerHTML = likesArr[i];*/
             }
         });
+        
+        function getParameterByName(name, url) {
+            if (!url) {
+              url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
 
 				// Add questions to the firebase DB
 				var questionText = document.getElementById("question-input-box");

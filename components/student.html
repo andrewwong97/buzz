@@ -32,6 +32,8 @@
 					<input type="submit" class="btn btn-add-question" onclick="submitQuestionToDB()">
 				</div>
 			</div>
+            <div id="questionDiv">
+            </div>
 <!--
 			<li class="post">
 				<div class="count"><p>15</p></div>
@@ -74,12 +76,6 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
     <script>
-        var likesArr = [];
-        var namesArr = [];
-        var textsArr = [];
-        var idsArr = [];
-				var questionIDArr = [];
-
         // Initialize Firebase
         var config = {
           apiKey: "AIzaSyDIQcBZ4aBzumtBy2vOWIXE_coJmsYaYCg",
@@ -240,6 +236,13 @@
         const db = firebase.database().ref();
         const classes = db.child('Classes').child(className).child("Questions");
         classes.on('value', function(snapshot) {
+            
+            var likesArr = [];
+            var namesArr = [];
+            var textsArr = [];
+            var idsArr = [];
+            var questionIDArr = [];
+            
             var questions = snapshot.val();
             for (var key in questions) {
                 // skip loop if the property is from prototype
@@ -267,9 +270,9 @@
                         //id = obj[prop];
                         idsArr.push(obj[prop]);
                     }
-										else if(prop == "qID") {
-											questionIDArr.push(obj[prop]);
-										}
+                    else if(prop == "qID") {
+				        questionIDArr.push(obj[prop]);
+				    }
                 }
                 /*var table = document.getElementById("test");
                 var row = table.insertRow(1);
@@ -310,8 +313,12 @@
                     }
                 }
             });
+            var div = document.getElementById("questionDiv");
+            while(div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
             for (var i = namesArr.length -1; i >= 0; i--) {
-                var div = document.getElementById("post-container");
+                
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
 								li.setAttribute("id", questionIDArr[i]);

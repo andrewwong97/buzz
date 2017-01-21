@@ -26,13 +26,7 @@
 			<span class="center-text">
 				<h1>Professor Admin</h1>
 			</span>
-			<li class="post">
-				<div class="count"><p>15</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote" id="qid-1234567890"></a> <!-- QUESTION ID -->
-				<a id="post-user">Andrew</a>
-				<p>What is the difference between heap and stack in C++?</p>
-				<button class="btn btn-default" style="margin-left:10px;" data-toggle="modal" data-target=".answer-modal">Add Answer</button>
-			</li>
+            <div id="questionDiv"></div>
 			<div class="modal fade answer-modal" tabindex="-1" role="dialog" aria-hidden="true">
 			  <div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -48,6 +42,30 @@
 
 		</div>
 	</section>
+    
+    
+    <div class="container">
+        <div class="modal fade" id="loginModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+
+                        <h4 class="modal-title">Login</h4>
+                    </div><!-- end modal-header -->
+
+                    <div class="modal-body">
+                        <button class="btn btn-block btn-social btn-google" id="Google"><span class="fa fa-google"></span> Sign in with Google</button><br>
+                        <button class="btn btn-block btn-social btn-facebook" id="Facebook"><span class="fa fa-facebook-square"></span> Log in with Facebook</button>
+                    </div> <!-- end modal-body -->
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    </div><!-- end modal-footer -->
+                </div><!-- end modal-content -->
+            </div><!-- end modal-dialog -->
+        </div><!-- end myModal -->
+    </div>
 </html>
 
 
@@ -61,10 +79,6 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
     <script>
-        var likesArr = [];
-        var namesArr = [];
-        var textsArr = [];
-        var idsArr = [];
         
         // Initialize Firebase
         var config = {
@@ -221,6 +235,13 @@
         const db = firebase.database().ref();
         const classes = db.child('Classes').child("Class1").child("Questions");
         classes.on('value', function(snapshot) {
+            var likesArr = [];
+            var namesArr = [];
+            var textsArr = [];
+            var idsArr = [];
+            var questionIDArr = [];
+            var answersArr = [];
+            
             var questions = snapshot.val();
             for (var key in questions) {
                 // skip loop if the property is from prototype
@@ -244,9 +265,17 @@
                         //text = obj[prop];
                         textsArr.push(obj[prop]);
                     }
-                    else if(prop == "StudentId") {
+                    else if(prop == "Name") {
                         //id = obj[prop];
-                        idsArr.push(obj[prop])
+                        idsArr.push(obj[prop]);
+                    }
+                    else if(prop == "qID") {
+                        //id = obj[prop];
+                        questionIDArr.push(obj[prop]);
+                    }
+                    else if(prop == "AnswerText") {
+                        //id = obj[prop];
+                        answersArr.push(obj[prop]);
                     }
                 }
                 /*var table = document.getElementById("test");
@@ -284,39 +313,53 @@
                         idsArr[nextIndex] = idsArr[index];
                         idsArr[index] = holder4;
                         
+                        var holder5 = questionIDArr[nextIndex];
+                        questionIDArr[nextIndex] = questionIDArr[index];
+                        questionIDArr[index] = holder5;
+                        
+                        var holder6 = answersArr[nextIndex];
+                        answersArr[nextIndex] = answersArr[index];
+                        answersArr[index] = holder6;
+                        
                         isNotSwapped = false;
                     }
                 }
             });
+            var div = document.getElementById("questionDiv");
+            while(div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
             for (var i = namesArr.length -1; i >= 0; i--) {
-                var div = document.getElementById("post-container");
-                var li = document.createElement("li");
-                li.setAttribute("class", "post");
-                var div2 = document.createElement("div");
-                div2.setAttribute("class", "count");
-                var p = document.createElement("p");
-                var a = document.createElement("a");
-                a.setAttribute("class", "fa fa-arrow-up fa-lg upvote");
-                var a2 = document.createElement("a");
-                a2.setAttribute("id", "post-user");
-                var p2 = document.createElement("p");
-                var answer = document.createElement("button");
-				answer.setAttribute("class", "btn btn-default");
-				answer.setAttribute("style", "margin-left:10px;");
-				answer.setAttribute("data-toggle", "modal");
-				answer.setAttribute("data-target", ".answer-modal");
-				answer.innerHTML = "Add Answer";
-									
-                p2.appendChild(document.createTextNode(textsArr[i]));
-                a2.appendChild(document.createTextNode("Student " + idsArr[i]));
-                p.appendChild(document.createTextNode(likesArr[i]));
-                div2.appendChild(p);
-                li.appendChild(div2);
-                li.appendChild(a);
-                li.appendChild(a2);
-                li.appendChild(p2);
-				li.appendChild(answer);
-                div.appendChild(li);
+                if (answersArr[i] == "") {
+                    var li = document.createElement("li");
+                    li.setAttribute("class", "post");
+                    li.setAttribute("id", questionIDArr[i])
+                    var div2 = document.createElement("div");
+                    div2.setAttribute("class", "count");
+                    var p = document.createElement("p");
+                    var a = document.createElement("a");
+                    a.setAttribute("class", "fa fa-arrow-up fa-lg upvote");
+                    var a2 = document.createElement("a");
+                    a2.setAttribute("id", "post-user");
+                    var p2 = document.createElement("p");
+                    var answer = document.createElement("button");
+                    answer.setAttribute("class", "btn btn-default");
+                    answer.setAttribute("style", "margin-left:10px;");
+                    answer.setAttribute("data-toggle", "modal");
+                    answer.setAttribute("data-target", ".answer-modal");
+                    answer.innerHTML = "Add Answer";
+
+                    p2.appendChild(document.createTextNode(textsArr[i]));
+                    a2.appendChild(document.createTextNode(idsArr[i]));
+                    p.appendChild(document.createTextNode(likesArr[i]));
+                    div2.appendChild(p);
+                    li.appendChild(div2);
+                    li.appendChild(a);
+                    li.appendChild(a2);
+                    li.appendChild(p2);
+                    li.appendChild(answer);
+                    div.appendChild(li);
+                }
                 
                 /*var table = document.getElementById("test");
                 var row = table.insertRow(1);

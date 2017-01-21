@@ -32,24 +32,14 @@
 					<input type="submit" class="btn btn-add-question" onclick="submitQuestionToDB()">
 				</div>
 			</div>
+<!--
 			<li class="post">
 				<div class="count"><p>15</p></div>
 				<a class="fa fa-arrow-up fa-lg upvote"></a>
 				<a id="post-user">Andrew</a>
 				<p>What is the difference between heap and stack in C++?</p>
 			</li>
-			<li class="post">
-				<div class="count"><p>10</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
-				<a id="post-user">Anonymous</a>
-				<p>Why should I use Node.js over everything else?</p>
-			</li>
-			<li class="post">
-				<div class="count"><p>8</p></div>
-				<a class="fa fa-arrow-up fa-lg upvote"></a>
-				<a id="post-user">Andrew</a>
-				<p>I accidentally typed in "rm -Rf" in Terminal. Where are all my files?</p>
-			</li>
+-->
 		</div>
 	</section>
     <div class="container">
@@ -325,6 +315,12 @@
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
+				var answer = document.createElement("button");
+				answer.setAttribute("class", "btn btn-default");
+				answer.setAttribute("style", "margin-left:10px;");
+				answer.setAttribute("data-toggle", "modal");
+				answer.setAttribute("data-target", ".answer-modal");
+				answer.innerHTML = "See Answer";
 
                 p2.appendChild(document.createTextNode(textsArr[i]));
                 a2.appendChild(document.createTextNode("Student " + idsArr[i]));
@@ -334,6 +330,7 @@
                 li.appendChild(a);
                 li.appendChild(a2);
                 li.appendChild(p2);
+				li.appendChild(answer);
                 div.appendChild(li);
 
                 /*var table = document.getElementById("test");

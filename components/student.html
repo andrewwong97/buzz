@@ -432,7 +432,9 @@
                     var qsTag = "Question" + qsID.toString();
                     
                     classes.child(qsTag).child("Likes").set(newVal);
-
+                    //$("#post-container a").click(false);
+                    var disableQ = "#" + qsID.toString() + " a";
+                    $(disableQ).click(false);
 				});
 
     </script>

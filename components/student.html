@@ -7,7 +7,7 @@
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/bootstrap-social.css">
 	</head>
-	
+
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -28,8 +28,8 @@
 			</span>
 			<div class="add-parent">
 				<div class="add-child">
-					<input type="text" class="add-question" placeholder="Add Question">
-					<input type="submit" class="btn btn-add-question">
+					<input type="text" class="add-question" placeholder="Add Question" id="question-input-box">
+					<input type="submit" class="btn btn-add-question" onclick="submitQuestionToDB()">
 				</div>
 			</div>
 			<li class="post">
@@ -90,7 +90,7 @@
         var namesArr = [];
         var textsArr = [];
         var idsArr = [];
-        
+
         // Initialize Firebase
         var config = {
           apiKey: "AIzaSyDIQcBZ4aBzumtBy2vOWIXE_coJmsYaYCg",
@@ -99,7 +99,7 @@
           storageBucket: "test-bd419.appspot.com",
           messagingSenderId: "302255903097"
         };
-        
+
         function googleLogin() {
             if (!firebase.auth().currentUser) {
               // [START createprovider]
@@ -220,7 +220,7 @@
                 // [START_EXCLUDE]
                 document.getElementById('SignIn').style.display = 'none';
                 document.getElementById('SignOut').style.display = 'inline';
-                  
+
                 document.getElementById('signInName').textContent = "Signed in as " + displayName;
                 // [END_EXCLUDE]
               } else {
@@ -241,7 +241,7 @@
           window.onload = function() {
             initApp();
           };
-        
+
         firebase.initializeApp(config);
         const db = firebase.database().ref();
         const classes = db.child('Classes').child("Class1").child("Questions");
@@ -288,7 +288,7 @@
             var next2last = likesArr.length - 1;
             likesArr.some(function() {
                 var isNotSwapped = true;
-                
+
                 for (var index = 0; index < next2last; index += 1) {
                     var nextIndex = index + 1;
                     if (likesArr[index] > likesArr[nextIndex]) {
@@ -296,19 +296,19 @@
                         var holder = likesArr[nextIndex];
                         likesArr[nextIndex] = likesArr[index];
                         likesArr[index] = holder;
-                        
+
                         var holder2 = namesArr[nextIndex];
                         namesArr[nextIndex] = namesArr[index];
                         namesArr[index] = holder2;
-                        
+
                         var holder3 = textsArr[nextIndex];
                         textsArr[nextIndex] = textsArr[index];
                         textsArr[index] = holder3;
-                        
+
                         var holder4 = idsArr[nextIndex];
                         idsArr[nextIndex] = idsArr[index];
                         idsArr[index] = holder4;
-                        
+
                         isNotSwapped = false;
                     }
                 }
@@ -325,7 +325,7 @@
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
-                
+
                 p2.appendChild(document.createTextNode(textsArr[i]));
                 a2.appendChild(document.createTextNode("Student " + idsArr[i]));
                 p.appendChild(document.createTextNode(likesArr[i]));
@@ -335,7 +335,7 @@
                 li.appendChild(a2);
                 li.appendChild(p2);
                 div.appendChild(li);
-                
+
                 /*var table = document.getElementById("test");
                 var row = table.insertRow(1);
                 var cell1 = row.insertCell(0);
@@ -348,4 +348,32 @@
                 cell4.innerHTML = likesArr[i];*/
             }
         });
+
+				// Add questions to the firebase DB
+				var questionText = document.getElementById("question-input-box");
+
+				function submitQuestionToDB() {
+					// Code to count the number of questions already there
+					var count = 0;
+					classes.on('value', function(snapshot) {
+						var questions = snapshot.val();
+						//console.log(questions);
+						for(var q in questions) {
+							count++;
+						}
+					});
+					console.log(count);
+					var name = "John"; // Later to be replaced from Facebook Auth
+					var questionNumber = count + 1;
+					var questionTag = "Question" + questionNumber.toString();
+					var newQuestion = classes.child(questionTag);
+					newQuestion.set({
+						"Likes": 1,
+						"Name": name,
+						"Text": questionText.value
+					});
+
+					questionText.value = "";
+				}
+
     </script>

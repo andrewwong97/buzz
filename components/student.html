@@ -218,6 +218,7 @@
                 document.getElementById('SignOut').style.display = 'none';
                 document.getElementById('SignIn').style.display = 'inline';
                 document.getElementById('signInName').textContent = "";
+                window.location = "index.html";
                 // [END_EXCLUDE]
               }
             });
@@ -244,6 +245,7 @@
             var textsArr = [];
             var idsArr = [];
             var questionIDArr = [];
+            var answersArr = [];
 
             var questions = snapshot.val();
             for (var key in questions) {
@@ -274,6 +276,9 @@
                     }
                     else if(prop == "qID") {
 				        questionIDArr.push(obj[prop]);
+				    }
+                    else if(prop == "AnswerText") {
+				        answersArr.push(obj[prop]);
 				    }
                 }
                 /*var table = document.getElementById("test");
@@ -310,6 +315,10 @@
                         var holder4 = idsArr[nextIndex];
                         idsArr[nextIndex] = idsArr[index];
                         idsArr[index] = holder4;
+                        
+                        var holder5 = answersArr[nextIndex];
+                        answersArr[nextIndex] = answersArr[index];
+                        answersArr[index] = holder5;
 
                         isNotSwapped = false;
                     }
@@ -332,12 +341,14 @@
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
-				var answer = document.createElement("button");
-				answer.setAttribute("class", "btn btn-default");
-				answer.setAttribute("style", "margin-left:10px;");
-				answer.setAttribute("data-toggle", "modal");
-				answer.setAttribute("data-target", ".answer-modal");
-				answer.innerHTML = "See Answer";
+                if (answersArr[i] != "") {
+                    var answer = document.createElement("button");
+                    answer.setAttribute("class", "btn btn-default");
+                    answer.setAttribute("style", "margin-left:10px;");
+                    answer.setAttribute("data-toggle", "modal");
+                    answer.setAttribute("data-target", ".answer-modal");
+                    answer.innerHTML = "See Answer";
+                }
 
                 p2.appendChild(document.createTextNode(textsArr[i]));
                 a2.appendChild(document.createTextNode(idsArr[i]));
@@ -347,7 +358,9 @@
                 li.appendChild(a);
                 li.appendChild(a2);
                 li.appendChild(p2);
-				li.appendChild(answer);
+                if (answersArr[i] != "") {
+				    li.appendChild(answer);
+                }
                 div.appendChild(li);
 
                 /*var table = document.getElementById("test");

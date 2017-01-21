@@ -32,10 +32,12 @@
 				<div class="modal-content">
 				  <span class="center-text"><h2>Add Answer</h2></span>
 				  <div class="answer-container">
-					  <textarea class="answer-box" cols="50" rows="10" placeholder="Start typing your answer here..."></textarea>
-					  <input type="submit" class="btn btn-add-answer" style="margin-bottom:10px;">
+					  <textarea id="answerText" class="answer-box" cols="50" rows="10" placeholder="Start typing your answer here..."></textarea>
+					  <input id="submitButton" type="submit" class="btn btn-add-answer" style="margin-bottom:10px;" data-dismiss="modal">
 				  </div>
-				  
+				  <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                  </div><!-- end modal-footer -->
 				</div>
 			  </div>
 			</div>
@@ -79,6 +81,8 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
     <script>
+        
+        var answerId = 0;
         
         // Initialize Firebase
         var config = {
@@ -333,7 +337,6 @@
                 if (answersArr[i] == "") {
                     var li = document.createElement("li");
                     li.setAttribute("class", "post");
-                    li.setAttribute("id", questionIDArr[i])
                     var div2 = document.createElement("div");
                     div2.setAttribute("class", "count");
                     var p = document.createElement("p");
@@ -343,11 +346,15 @@
                     a2.setAttribute("id", "post-user");
                     var p2 = document.createElement("p");
                     var answer = document.createElement("button");
+                    answer.setAttribute("id", questionIDArr[i])
                     answer.setAttribute("class", "btn btn-default");
                     answer.setAttribute("style", "margin-left:10px;");
                     answer.setAttribute("data-toggle", "modal");
                     answer.setAttribute("data-target", ".answer-modal");
                     answer.innerHTML = "Add Answer";
+                    answer.onclick = function() {
+                        answerId = this.id; 
+                    };
 
                     p2.appendChild(document.createTextNode(textsArr[i]));
                     a2.appendChild(document.createTextNode(idsArr[i]));
@@ -373,4 +380,13 @@
                 cell4.innerHTML = likesArr[i];*/
             }
         });
+
+        
+        $("#submitButton").click(function() {
+            // Updating Firebase
+            var answerText = document.getElementById("answerText").value;
+            classes.child("Question" + answerId).child("AnswerText").set(answerText);
+        });
+        
+        
     </script>

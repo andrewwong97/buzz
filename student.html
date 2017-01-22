@@ -64,7 +64,7 @@
 		<div class="modal-content">
 		  <span class="center-text"><h2>Instructor's Answer</h2></span>
 		  <div class="answer-container">
-		  	  <div class="answer-box" style="margin-left:10px;margin-right:10px"><p>Sample answer here. Sample answer here. Sample answer here. Sample answer here.</p></div>
+		  	  <div class="answer-box" style="margin-left:10px;margin-right:10px"><p id="answerTextField">Sample answer here.</p></div>
 		  </div>
 
 		</div>
@@ -351,15 +351,24 @@
                 var a2 = document.createElement("a");
                 a2.setAttribute("id", "post-user");
                 var p2 = document.createElement("p");
-                if (answersArr[i] !== "") {
+                var input = document.createElement("input");
+                input.setAttribute("class", "answerTextHidden");
+                input.setAttribute("type", "hidden");
+                input.setAttribute("value", answersArr[i]);
+                if (answersArr[i] !=="") {
                     var answer = document.createElement("button");
                     answer.setAttribute("class", "btn btn-default");
+                    answer.setAttribute("id", "Answer" + questionIDArr[i]);
                     answer.setAttribute("style", "margin-left:10px;");
                     answer.setAttribute("data-toggle", "modal");
                     answer.setAttribute("data-target", ".answer-modal");
                     answer.innerHTML = "See Answer";
+                    answer.onclick = function() {
+                        var idString = this.id + "";
+                        document.getElementById("answerTextField").innerHTML = document.getElementById(idString.substring(idString.indexOf("Answer") + 6)).lastChild.value
+                    };
                 }
-
+                
                 p2.appendChild(document.createTextNode(textsArr[i]));
                 a2.appendChild(document.createTextNode(idsArr[i]));
                 p.appendChild(document.createTextNode(likesArr[i]));
@@ -375,6 +384,7 @@
                 if (answersArr[i] != "") {
 				    li.appendChild(answer);
                 }
+                li.appendChild(input);
                 div.appendChild(li);
 
                 /*var table = document.getElementById("test");

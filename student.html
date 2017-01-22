@@ -25,7 +25,7 @@
 	<section id="messages">
 		<div id="post-container" class="post-container">
 			<span class="center-text">
-				<h1>Questions</h1>
+				<h1 id="class-header">Questions</h1>
 			</span>
 			<div class="add-parent">
 				<div class="add-child">
@@ -238,7 +238,8 @@
 
 
         var className = String(getParameterByName("accessCode"));
-        console.log(className);
+        var studentClassTitle = className + " - Questions";
+        $("#class-header").text(studentClassTitle);
 
         const db = firebase.database().ref();
         const classes = db.child('Classes').child(className).child("Questions");
@@ -337,7 +338,9 @@
                 div.removeChild(div.firstChild);
             }
             for (var i = namesArr.length -1; i >= 0; i--) {
-
+                if(questionIDArr[i] == 1) {
+                  continue;
+                } // Ignore our test question
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
 				li.setAttribute("id", questionIDArr[i]); // Add question id to each question

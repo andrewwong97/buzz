@@ -33,8 +33,8 @@
 					<input type="submit" class="btn btn-add-question" onclick="submitQuestionToDB()">
 				</div>
 			</div>
-            <div id="questionDiv">
-            </div>
+            <div id="questionDiv"></div>
+            <div id="noQuestionDiv"></div>
 		</div>
 	</section>
     <div class="container">
@@ -333,6 +333,8 @@
                     }
                 }
             });
+            
+            var numPosts = 0;
             var div = document.getElementById("questionDiv");
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
@@ -341,6 +343,7 @@
                 if(questionIDArr[i] == 1) {
                   continue;
                 } // Ignore our test question
+                numPosts++;
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
 				li.setAttribute("id", questionIDArr[i]); // Add question id to each question
@@ -400,6 +403,12 @@
                 cell2.innerHTML = textsArr[i];
                 cell3.innerHTML = idsArr[i];
                 cell4.innerHTML = likesArr[i];*/
+            }
+            if (numPosts == 0) {
+                var noneListing = document.createElement("h1");
+                noneListing.setAttribute("style", "font-size:60pt;font-weight:600;color:#b9b9b9;text-align:center");
+                noneListing.innerHTML = "There are no questions for this class. Feel free to ask one!";
+                document.getElementById("noQuestionDiv").appendChild(noneListing);
             }
         });
 

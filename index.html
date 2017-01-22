@@ -27,7 +27,7 @@
 			<br>
 			<p style="color:#fff;font-size:1.5em;">Buzz can be useful for students and teachers alike. We believe that the classroom should foster a collaborative atmosphere, <br> where students prioritize the questions that get answered. Get started below!</p><br>
 			<a id="studentButton" data-toggle="modal" href="#loginModal" class="btn btn-default">I'm a Student</a>
-			<a href="teacher.html?course=Class1" class="btn btn-default">I'm a Teacher</a>
+			<a href="#enterPasswordModal" class="btn btn-default" data-toggle="modal">I'm a Teacher</a>
 			<br><br>
 			<a class="github-button" href="https://github.com/andrewwong97/buzz/subscription" data-icon="octicon-eye" data-style="mega" data-count-href="/andrewwong97/buzz/watchers" data-count-api="/repos/andrewwong97/buzz#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch andrewwong97/buzz on GitHub">Watch</a>
 		</div>
@@ -77,6 +77,28 @@
 
                     <div class="modal-footer">
                         <button class="btn btn-primary" type="button" id="continueCode">Continue</button>
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    </div><!-- end modal-footer -->
+                </div><!-- end modal-content -->
+            </div><!-- end modal-dialog -->
+        </div><!-- end myModal -->
+        
+        <div class="modal fade" id="enterPasswordModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Enter Professor Password</h4>
+                    </div><!-- end modal-header -->
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="password" id="password" class="form-control" placeholder="Password">
+                        </div>
+                    </div> <!-- end modal-body -->
+                        
+                    <div class="modal-footer">
+                        <input id="submitPass" type="submit" class="btn btn-add-answer" data-dismiss="modal">
                         <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
                     </div><!-- end modal-footer -->
                 </div><!-- end modal-content -->
@@ -250,5 +272,8 @@
     
     $('#continueCode').click(function() {
         window.location.href = "student.html?accessCode=" + document.getElementById("accessCode").value;
+    });
+    $('#submitPass').click(function() {
+        window.location.href = "teacher.html?course=Class1";
     });
 </script>

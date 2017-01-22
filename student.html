@@ -344,6 +344,9 @@
                   continue;
                 } // Ignore our test question
                 numPosts++;
+                while(document.getElementById("noQuestionDiv").firstChild) {
+                    document.getElementById("noQuestionDiv").removeChild(document.getElementById("noQuestionDiv").firstChild);
+                }
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
 				li.setAttribute("id", questionIDArr[i]); // Add question id to each question

@@ -417,6 +417,9 @@
                     continue;
                 }
                 if (answersArr[i] == "") {
+                    while(document.getElementById("noQuestionDiv").firstChild) {
+                        document.getElementById("noQuestionDiv").removeChild(document.getElementById("noQuestionDiv").firstChild);
+                    }
                     var li = document.createElement("li");
                     li.setAttribute("class", "post");
                     var div2 = document.createElement("div");

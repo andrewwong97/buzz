@@ -25,7 +25,7 @@
 	<section id="messages">
 		<div id="post-container" class="post-container">
 			<span class="center-text">
-				<h1>Questions</h1>
+				<h1 id="class-header">Questions</h1>
 			</span>
 			<div class="add-parent">
 				<div class="add-child">
@@ -238,7 +238,8 @@
 
 
         var className = String(getParameterByName("accessCode"));
-        console.log(className);
+        var studentClassTitle = className + " - Questions";
+        $("#class-header").text(studentClassTitle);
 
         const db = firebase.database().ref();
         const classes = db.child('Classes').child(className).child("Questions");

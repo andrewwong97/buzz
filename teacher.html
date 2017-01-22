@@ -466,7 +466,19 @@
         $("#submitCourse").click(function() {
             // Updating Firebase
             var courseName = document.getElementById("addCourseName").value;
-            classList.child(courseName).child("CourseId").set(courseName);
+            var newCourse = classList.child(courseName);
+            newCourse.set({
+                "ClassId": courseName,
+                "Questions": {
+                    "Question1": {
+                        "AnswerText": "",
+                        "Likes": 1,
+                        "Name": "John Doe",
+                        "Text": "Test Question?",
+                        "qID": 1
+                    }
+                }
+            });
         });
         
         function getParameterByName(name, url) {

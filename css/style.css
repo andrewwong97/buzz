@@ -180,3 +180,7 @@
 .btn-add-answer:hover, .btn-add-answer:focus {
 	background-color: #4690e6;
 }
+
+.admin-course {
+	margin-bottom: 5px !important;
+}

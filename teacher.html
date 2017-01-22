@@ -17,15 +17,16 @@
 				</a>
 				<button id="SignIn" type="button" class="btn btn-default navbar-btn nav-item" data-toggle="modal" data-target="#loginModal">Sign in</button>
                 <button id="SignOut" type="button" class="btn btn-default navbar-btn nav-item">Sign out</button>
+                <button class="btn btn-social btn-github" id="admin-panel" data-toggle="modal" data-target="#adminModal"><span class="fa fa-power-off"></span>Open Admin Panel</button>
 			</div>
 			<p class="navbar-text navbar-right" style="padding-right:20px" id="signInName"></p>
 		</div>
 	</nav>
-
+	
 	<section id="messages">
 		<div id="post-container" class="post-container">
 			<span class="center-text">
-				<h1>Instructor Admin</h1>
+				<h1>Instructor Admin - <span id="classID">Class1</span></h1>
 			</span>
             <div id="questionDiv"></div>
 			<div class="modal fade answer-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -60,6 +61,30 @@
                     <div class="modal-body">
                         <button class="btn btn-block btn-social btn-google" id="Google"><span class="fa fa-google"></span> Sign in with Google</button><br>
                         <button class="btn btn-block btn-social btn-facebook" id="Facebook"><span class="fa fa-facebook-square"></span> Log in with Facebook</button>
+                    </div> <!-- end modal-body -->
+
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                    </div><!-- end modal-footer -->
+                </div><!-- end modal-content -->
+            </div><!-- end modal-dialog -->
+        </div><!-- end myModal -->
+    </div>
+    
+    <div class="container">
+        <div class="modal fade" id="adminModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">My Courses</h4>
+                    </div><!-- end modal-header -->
+
+                    <div class="modal-body">
+                       <a class="btn btn-default admin-course" href="">Data Structures</a>
+                       <a class="btn btn-default admin-course" href="">Object Oriented Programming</a>
+                       <a class="btn btn-default admin-course" href="">Linear Algebra</a>
+                       <button class="btn btn-block btn-social btn-instagram"><span class="fa fa-plus"></span>Add Course</button>
                     </div> <!-- end modal-body -->
 
                     <div class="modal-footer">

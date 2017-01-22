@@ -409,7 +409,12 @@
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
             }
+			
+			var numPosts = 0;
             for (var i = namesArr.length -1; i >= 0; i--) {
+                if (questionIDArr[i] == 1) {
+                    continue;
+                }
                 if (answersArr[i] == "") {
                     var li = document.createElement("li");
                     li.setAttribute("class", "post");
@@ -442,7 +447,17 @@
                     li.appendChild(p2);
                     li.appendChild(answer);
                     div.appendChild(li);
+					
+					numPosts+=1;
                 }
+
+				if (numPosts === 0) {
+					var noneListing = document.getElementById("post-container").createElement("h1");
+					noneListing.setAttribute("style", "font-size:60pt;font-weight:600;color:#b9b9b9");
+					noneListing.innerHTML = "All questions have been answered!";
+					document.getElementById("post-container").appendChild(noneListing);
+					
+				}
                 
                 /*var table = document.getElementById("test");
                 var row = table.insertRow(1);

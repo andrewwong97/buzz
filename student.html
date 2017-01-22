@@ -337,7 +337,9 @@
                 div.removeChild(div.firstChild);
             }
             for (var i = namesArr.length -1; i >= 0; i--) {
-
+                if(questionIDArr[i] == 1) {
+                  continue;
+                } // Ignore our test question
                 var li = document.createElement("li");
                 li.setAttribute("class", "post");
 				li.setAttribute("id", questionIDArr[i]); // Add question id to each question

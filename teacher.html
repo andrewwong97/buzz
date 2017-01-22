@@ -29,6 +29,7 @@
 				<h1>Instructor Admin - <span id="classID">Class1</span></h1>
 			</span>
             <div id="questionDiv"></div>
+            <div id="noQuestionDiv"></div>
 			<div class="modal fade answer-modal" tabindex="-1" role="dialog" aria-hidden="true">
 			  <div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -409,7 +410,7 @@
             while(div.firstChild) {
                 div.removeChild(div.firstChild);
             }
-			
+            
 			var numPosts = 0;
             for (var i = namesArr.length -1; i >= 0; i--) {
                 if (questionIDArr[i] == 1) {
@@ -450,14 +451,7 @@
 					
 					numPosts+=1;
                 }
-
-				if (numPosts === 0) {
-					var noneListing = document.getElementById("post-container").createElement("h1");
-					noneListing.setAttribute("style", "font-size:60pt;font-weight:600;color:#b9b9b9");
-					noneListing.innerHTML = "All questions have been answered!";
-					document.getElementById("post-container").appendChild(noneListing);
-					
-				}
+                console.log(numPosts);
                 
                 /*var table = document.getElementById("test");
                 var row = table.insertRow(1);
@@ -469,6 +463,12 @@
                 cell2.innerHTML = textsArr[i];
                 cell3.innerHTML = idsArr[i];
                 cell4.innerHTML = likesArr[i];*/
+            }
+            if (numPosts == 0) {
+                var noneListing = document.createElement("h1");
+                noneListing.setAttribute("style", "font-size:60pt;font-weight:600;color:#b9b9b9;text-align:center");
+                noneListing.innerHTML = "All questions have been answered!";
+                document.getElementById("noQuestionDiv").appendChild(noneListing);
             }
         });
 
